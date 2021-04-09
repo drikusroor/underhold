@@ -29,6 +29,9 @@ return [
             'paths'         => [
                 base_path('app/Entities')
             ],
+            'mappings' => [
+                App\Mappings\SupplierMapping::class,
+            ],
             'repository'    => Doctrine\ORM\EntityRepository::class,
             'proxies'       => [
                 'namespace'     => false,
@@ -107,8 +110,7 @@ return [
     | Create a custom or override a Doctrine Type
     |--------------------------------------------------------------------------
     */
-    'custom_types'               => [
-    ],
+    'custom_types'               => [],
     /*
     |--------------------------------------------------------------------------
     | DQL custom datetime functions

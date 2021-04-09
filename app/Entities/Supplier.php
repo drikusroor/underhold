@@ -1,7 +1,8 @@
 <?php
 
+namespace App\Entities;
+
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -49,5 +50,14 @@ class Supplier
     public function getCode()
     {
         return $this->code;
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'code' => $this->code
+        ];
     }
 }

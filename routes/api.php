@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Supplier
+Route::get('/suppliers', [SupplierController::class, 'index']);
+Route::get('/suppliers/{id}', [SupplierController::class, 'find']);
+Route::post('/suppliers', [SupplierController::class, 'post']);
+Route::delete('/suppliers/{id}', [SupplierController::class, 'remove']);
