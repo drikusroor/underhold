@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\SignupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/signup/supplier', [SignupController::class, 'index']);
+
+Route::get('/signup/client', function () {
+    return abort(404, 'Not yet implemented.');
 });

@@ -33,6 +33,11 @@ module.exports = {
                 },
                 underhold: {
                     DEFAULT: "08C447",
+                red: {
+                    DEFAULT: "#9E1814",
+                },
+                yellow: {
+                    DEFAULT: "#EB9513",
                 },
             },
         },
