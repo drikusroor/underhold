@@ -7,6 +7,11 @@ module.exports = {
     ],
     darkMode: false, // or 'media' or 'class'
     theme: {
+        colors: {
+            underhold: {
+                DEFAULT: "08C447",
+            },
+        },
         extend: {},
     },
     variants: {
