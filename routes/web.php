@@ -17,8 +17,7 @@ use App\Http\Controllers\Web\SignupController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/signup/supplier', [SignupController::class, 'index']);
 
-Route::get('/signup/client', function () {
-    return abort(404, 'Not yet implemented.');
-});
+// Signup
+Route::get('/signup/supplier', [SignupController::class, 'index']);
+Route::post('/signup/supplier', [SignupController::class, 'store']);

@@ -26,22 +26,24 @@
 
     <div class="min-h-screen flex items-center justify-center">
         <div class="m-2 sm:m-0 p-6 sm:p-8 md:p-16 bg-white shadow-2xl sm:w-2/3 max-w-2xl rounded">
-            <h1 class="text-3xl font-bold mb-10 text-gray-800">Aanmelden als aannemer</h1>
-            <form class="space-y-8">
+            <h1 class="text-3xl font-bold mb-10 text-gray-800">{{ $title }}</h1>
+            <form method="POST" class="space-y-8">
+
+                @csrf
 
                 <div>
-                    <label class="block mb-2 font-bold" id="name">Bedrijfsnaam</label>
-                    <input class="rounded w-full p-1 border-2 border-gray-200 outline-none focus:border-blue-400" for="name" type="text">
+                    <label for="name" class="block mb-2 font-bold">{{ $form['name']['label'] }}</label>
+                    <input id="name" name="name" class="rounded w-full p-1 border-2 border-gray-200 outline-none focus:border-blue-400" type="text">
                 </div>
 
                 <div>
-                    <label class="block mb-2 font-bold" id="email">E-mail</label>
-                    <input class="rounded w-full p-1 border-2 border-gray-200 outline-none focus:border-blue-400" for="email" type="email">
+                    <label for="email" class="block mb-2 font-bold">E-mail</label>
+                    <input id="email" name="email" class="rounded w-full p-1 border-2 border-gray-200 outline-none focus:border-blue-400" type="email">
                 </div>
 
                 <div>
-                    <label class="block mb-2 font-bold" id="password">Wachtwoord</label>
-                    <input class="rounded w-full p-1 border-2 border-gray-200 outline-none focus:border-blue-400" for="password" type="password">
+                    <label for="password" class="block mb-2 font-bold">Wachtwoord</label>
+                    <input id="password" name="password" class="rounded w-full p-1 border-2 border-gray-200 outline-none focus:border-blue-400" type="password">
                 </div>
 
                 <div class="flex items-center">
