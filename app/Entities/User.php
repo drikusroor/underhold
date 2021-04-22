@@ -4,12 +4,12 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-use Doctrine\ORM\Mapping as ORM;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\Table(name="user",uniqueConstraints={@ORM\UniqueConstraint(name="search_idx", columns={"email"})})
  */
 class User extends Authenticatable
 {
@@ -38,6 +38,12 @@ class User extends Authenticatable
     protected $password;
 
     /**
+     * @ORM\OneToOne(targetEntity="Supplier", mappedBy="user")
+     * @var Supplier
+     */
+    protected $supplier;
+
+    /**
      * @param $firstname
      * @param $lastname
      */
@@ -62,6 +68,19 @@ class User extends Authenticatable
     public function getPassword()
     {
         return $this->password;
+    }
+
+    public function setSupplier(Supplier $supplier)
+    {
+        if (!is_null($this->supplier) && $this->supplier->id != $supplier->id) {
+            $supplier->setUser($this);
+            $this->supplier = $supplier;
+        }
+    }
+
+    public function getSupplier()
+    {
+        return $this->supplier;
     }
 
     /**
