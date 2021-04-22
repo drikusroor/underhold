@@ -7,11 +7,19 @@
     <a href="https://github.com/drikusroor/underhold/actions/workflows/laravel.yml"><img src="https://github.com/drikusroor/underhold/actions/workflows/laravel.yml/badge.svg" alt="Build Status"></a>
 </p>
 
-## Prequisites
+## Setup
 
 -   WSL2 + Ubuntu 20.04
 -   Docker
 -   Node 12.14 or higher
+
+Be sure to install Node 12.14 on your Ubuntu VM. A useful tool for this is NVM (Node Version Manager). For installation instructions, see: [NVM Github](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+Then, install Node 12.14:
+
+```sh
+nvm i 12.14
+```
 
 ## Start developing
 
