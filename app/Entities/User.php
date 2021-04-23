@@ -7,14 +7,17 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
 use Doctrine\ORM\Mapping as ORM;
+use Filament\Models\Concerns\IsFilamentUser;
+use Filament\Models\Contracts\FilamentUser;
+
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user",uniqueConstraints={@ORM\UniqueConstraint(name="search_idx", columns={"email"})})
  */
-class User implements AuthenticatableContract
+class User implements AuthenticatableContract,  FilamentUser
 {
-    use Authenticatable, HasFactory, Notifiable;
+    use Authenticatable, HasFactory, Notifiable, IsFilamentUser;
 
     /**
      * @ORM\Id
@@ -26,12 +29,12 @@ class User implements AuthenticatableContract
     /**
      * @ORM\Column(type="string")
      */
-    protected $name;
+    public $name;
 
     /**
      * @ORM\Column(type="string")
      */
-    protected $email;
+    public $email;
 
     /**
      * @ORM\Column(type="string")
