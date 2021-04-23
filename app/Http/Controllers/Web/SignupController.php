@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\WebController;
 use App\Entities\Supplier;
 use App\Entities\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class SignupController extends WebController
 {
@@ -85,19 +86,34 @@ class SignupController extends WebController
     {
         $body = $request->all();
 
+        $supplierRepository = $this->em->getRepository('App\\Entities\\Supplier');
+        $supplierExists = $supplierRepository->findOneBy(array('code' => $body['name']));
+
+        if (!is_null($supplierExists)) {
+            abort(400, 'Supplier already exists.');
+        }
+
+        $userRepository = $this->em->getRepository('App\\Entities\\User');
+        $userExists = $userRepository->findOneBy(array('email' => $body['email']));
+
+        if (!is_null($userExists)) {
+            abort(400, 'User already exists.');
+        }
+
         $supplier = new Supplier($body['name'], $body['name']);
-
-        $hash = Hash::make($body['password']);
-
-        $user = new User($body['name'], $body['email'], $hash);
-
-        $this->em->persist($user);
         $this->em->persist($supplier);
         $this->em->flush();
 
-        $data = array("name" => $body['name'], "title" => "Aanmelding succesvol!");
+        $hash = Hash::make($body['password']);
+        $user = new User($body['name'], $body['email'], $hash);
+        $user->setSupplier($supplier);
 
-        return view('signup-complete', $data);
+        $this->em->persist($user);
+        $this->em->flush();
+
+        Auth::login($user);
+
+        return redirect()->intended('/');
     }
 
     /**

@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="supplier")
+ * @ORM\Table(name="supplier",uniqueConstraints={@ORM\UniqueConstraint(name="search_idx", columns={"code"})})
  */
 class Supplier
 {
@@ -24,8 +24,16 @@ class Supplier
 
     /**
      * @ORM\Column(type="string")
+     * 
      */
     protected $code;
+
+    /**
+     * @ORM\OneToOne(targetEntity="User", mappedBy="supplier")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @var User
+     */
+    protected $user;
 
     /**
      * @param $name
@@ -50,6 +58,13 @@ class Supplier
     public function getCode()
     {
         return $this->code;
+    }
+
+    public function setUser(User $user)
+    {
+        if ($this->user->id != $user->id) {
+            $this->user = $user;
+        }
     }
 
     public function toArray()

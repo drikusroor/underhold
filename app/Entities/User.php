@@ -4,16 +4,17 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use LaravelDoctrine\ORM\Auth\Authenticatable;
 use Doctrine\ORM\Mapping as ORM;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\Table(name="user",uniqueConstraints={@ORM\UniqueConstraint(name="search_idx", columns={"email"})})
  */
-class User extends Authenticatable
+class User implements AuthenticatableContract
 {
-    use HasFactory, Notifiable;
+    use Authenticatable, HasFactory, Notifiable;
 
     /**
      * @ORM\Id
@@ -38,6 +39,12 @@ class User extends Authenticatable
     protected $password;
 
     /**
+     * @ORM\OneToOne(targetEntity="Supplier", mappedBy="user")
+     * @var Supplier
+     */
+    protected $supplier;
+
+    /**
      * @param $firstname
      * @param $lastname
      */
@@ -48,38 +55,56 @@ class User extends Authenticatable
         $this->password = $password;
     }
 
-
-    public function getAuthIdentifierName()
-    {
-        return 'id';
-    }
-
-    public function getAuthIdentifier()
+    /**
+     * @return int
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getPassword()
+    /**
+     * @return Name
+     */
+    public function getName()
     {
-        return $this->password;
+        return $this->name;
     }
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * @param Name $name
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function setName(Name $name)
+    {
+        $this->name = $name;
+    }
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
+     * @return string
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function setSupplier(Supplier $supplier)
+    {
+        if (!is_null($this->supplier) && $this->supplier->id != $supplier->id) {
+            $supplier->setUser($this);
+            $this->supplier = $supplier;
+        }
+    }
+
+    public function getSupplier()
+    {
+        return $this->supplier;
+    }
 }

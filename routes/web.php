@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\LoginController;
 use App\Http\Controllers\Web\SignupController;
 
 /*
@@ -21,3 +22,8 @@ Route::get('/', function () {
 // Signup
 Route::get('/signup/supplier', [SignupController::class, 'index']);
 Route::post('/signup/supplier', [SignupController::class, 'store']);
+
+// Login
+Route::get('/login', [LoginController::class, 'index']);
+Route::post('/login', [LoginController::class, 'login']);
+Route::get('/logout', [LoginController::class, 'logout']);
