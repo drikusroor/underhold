@@ -4,16 +4,17 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use LaravelDoctrine\ORM\Auth\Authenticatable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user",uniqueConstraints={@ORM\UniqueConstraint(name="search_idx", columns={"email"})})
  */
-class User extends Authenticatable
+class User implements AuthenticatableContract
 {
-    use HasFactory, Notifiable;
+    use Authenticatable, HasFactory, Notifiable;
 
     /**
      * @ORM\Id
@@ -54,20 +55,44 @@ class User extends Authenticatable
         $this->password = $password;
     }
 
-
-    public function getAuthIdentifierName()
-    {
-        return 'id';
-    }
-
-    public function getAuthIdentifier()
+    /**
+     * @return int
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getPassword()
+    /**
+     * @return Name
+     */
+    public function getName()
     {
-        return $this->password;
+        return $this->name;
+    }
+
+    /**
+     * @param Name $name
+     */
+    public function setName(Name $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 
     public function setSupplier(Supplier $supplier)
@@ -82,23 +107,4 @@ class User extends Authenticatable
     {
         return $this->supplier;
     }
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 }

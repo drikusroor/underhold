@@ -23,6 +23,14 @@
 </head>
 
 <body class="antialiased bg-gray-100">
+    <div class="block-container bg-green-900 py-1 px-2 text-white text-right">
+        @if (!is_null(Auth::user()))
+        Welkom, {{ Auth::user()->getName() }} |
+        <a class="text-white hover:underline" href="/logout">uitloggen</a>
+        @else
+        <a class="text-white hover:underline" href="/login">inloggen</a>
+        @endif
+    </div>
     <div class="block-container bg-green">
         <div class="block-content p-4">
             <div class="block-logo w-64 h-64 mx-auto"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 169.0390625 147" overflow="visible">

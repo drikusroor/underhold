@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\WebController;
 use App\Entities\Supplier;
 use App\Entities\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class SignupController extends WebController
 {
@@ -110,9 +111,9 @@ class SignupController extends WebController
         $this->em->persist($user);
         $this->em->flush();
 
-        $data = array("name" => $body['name'], "title" => "Aanmelding succesvol!");
+        Auth::login($user);
 
-        return view('signup-complete', $data);
+        return redirect()->intended('/');
     }
 
     /**
