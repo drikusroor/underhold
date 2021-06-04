@@ -1,10 +1,13 @@
 module.exports = {
-    purge: [
-        "./storage/framework/views/*.php",
-        "./resources/**/*.blade.php",
-        "./resources/**/*.js",
-        "./resources/**/*.vue",
-    ],
+    purge: {
+        enabled: true,
+        content: [
+            "./storage/framework/views/*.php",
+            "./resources/**/*.blade.php",
+            "./resources/**/*.js",
+            "./resources/**/*.vue",
+        ],
+    },
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
@@ -33,17 +36,18 @@ module.exports = {
                 },
                 underhold: {
                     DEFAULT: "08C447",
-                red: {
-                    DEFAULT: "#9E1814",
-                },
-                yellow: {
-                    DEFAULT: "#EB9513",
+                    red: {
+                        DEFAULT: "#9E1814",
+                    },
+                    yellow: {
+                        DEFAULT: "#EB9513",
+                    },
                 },
             },
         },
+        variants: {
+            extend: {},
+        },
+        plugins: [],
     },
-    variants: {
-        extend: {},
-    },
-    plugins: [],
 };
